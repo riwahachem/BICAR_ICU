@@ -28,7 +28,7 @@ mod_init <- glm(formule_init, data = data, family = binomial)
 backward_aic <- stepAIC(mod_init, direction = "backward", trace = TRUE)
 
 n <- nrow(data)
-backward_bic <- stepAIC(start_mod, direction = "backward", k = log(n), trace = TRUE)
+backward_bic <- stepAIC(mod_init, direction = "backward", k = log(n), trace = TRUE)
 
 #Variables selectionnées parmi les variables candidates
 candidats_selec_aic <- attr(terms(backward_aic), "term.labels")
