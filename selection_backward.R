@@ -34,16 +34,17 @@ backward_bic <- stepAIC(mod_init, direction = "backward", k = log(n), trace = TR
 candidats_selec_aic <- attr(terms(backward_aic), "term.labels")
 candidats_selec_bic <- attr(terms(backward_bic), "term.labels")
 
-# Modèle final à utiliser pour la régression logistique
-vars_finales_aic <- c(candidats_selec, vars_obligatoires)
+#Variables finales
+vars_finales_aic <- c(candidats_selec_aic, vars_obligatoires)
 vars_finales_bic <- c(candidats_selec_bic, vars_obligatoires)
 
+# Modèle final à utiliser pour la régression logistique
 formule_finale_aic <- as.formula(paste("PNEUMONIA_YN ~", paste(vars_finales_aic, collapse = " + ")))
 formule_finale_bic <- as.formula(paste("PNEUMONIA_YN ~", paste(vars_finales_bic, collapse = " + ")))
 
 final_model_bic <- glm(formule_finale_bic, data = data, family = binomial)
 final_model_aic <- glm(formule_finale_aic, data = data, family = binomial)
 
-# Variables retenues
+# Affichage des variables retenues
 print(vars_finales_aic)
 print(vars_finales_bic)

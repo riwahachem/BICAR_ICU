@@ -39,6 +39,8 @@ ggplot(data, aes(x = factor(ATCD_Smoking), fill = factor(PNEUMONIA_YN))) +
     fill = "Pneumonie"
   )
 
+data$INCL_IMV <- as.factor(data$INCL_IMV)
+
 ggplot(data, aes(x = factor(INCL_IMV), fill = factor(PNEUMONIA_YN))) +
   geom_bar(position = "dodge") +
   scale_fill_manual(values = c("0" = "steelblue", "1" = "darkred")) +
