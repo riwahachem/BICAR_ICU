@@ -26,5 +26,7 @@ forward_model <- step(
 
 summary(forward_model)
 
-vars_finales <- attr(terms(forward_model), "term.labels")
-print(vars_finales)
+vars_forward <- attr(terms(forward_model), "term.labels")
+print(vars_forward)
+
+save(vars_forward, file = "vars_forward.RData")

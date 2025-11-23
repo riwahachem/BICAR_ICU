@@ -35,16 +35,19 @@ candidats_selec_aic <- attr(terms(backward_aic), "term.labels")
 candidats_selec_bic <- attr(terms(backward_bic), "term.labels")
 
 #Variables finales
-vars_finales_aic <- c(candidats_selec_aic, vars_obligatoires)
-vars_finales_bic <- c(candidats_selec_bic, vars_obligatoires)
+vars_backward_aic <- c(candidats_selec_aic, vars_obligatoires)
+vars_backward_bic <- c(candidats_selec_bic, vars_obligatoires)
 
 # Modèle final à utiliser pour la régression logistique
-formule_finale_aic <- as.formula(paste("PNEUMONIA_YN ~", paste(vars_finales_aic, collapse = " + ")))
-formule_finale_bic <- as.formula(paste("PNEUMONIA_YN ~", paste(vars_finales_bic, collapse = " + ")))
+formule_finale_aic <- as.formula(paste("PNEUMONIA_YN ~", paste(vars_backward_aic, collapse = " + ")))
+formule_finale_bic <- as.formula(paste("PNEUMONIA_YN ~", paste(vars_backward_bic, collapse = " + ")))
 
 final_model_bic <- glm(formule_finale_bic, data = data, family = binomial)
 final_model_aic <- glm(formule_finale_aic, data = data, family = binomial)
 
 # Affichage des variables retenues
-print(vars_finales_aic)
-print(vars_finales_bic)
+print(vars_backward_aic)
+print(vars_backward_bic)
+
+save(vars_backward_aic, file = "vars_backward_aic.RData")
+save(vars_backward_bic, file = "vars_backward_bic.RData")
