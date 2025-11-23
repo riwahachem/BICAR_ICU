@@ -1,7 +1,7 @@
 library(ggplot2)
 library(dplyr)
 
-data = read.csv2("data.csv",sep=" ")
+data = read.csv2("data.csv",sep=",")
 Y = data$PNEUMONIA_YN
 Y = as.factor(Y)
 
