@@ -1,4 +1,4 @@
-data = read.csv("data.csv", header = TRUE, sep = " ")
+data <- read.csv("data.csv")  
 
 # Modèle avec les variables obligatoires
 null_model <- glm(

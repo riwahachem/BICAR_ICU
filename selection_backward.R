@@ -3,7 +3,7 @@ library(MASS)
 library(dplyr)
 library(car)
 
-data = read.csv("data.csv", header = TRUE, sep = " ")
+data <- read.csv("data.csv")  
 
 #variables à conserver obligatoirement
 vars_obligatoires = c("INCL_SEPSIS_YN","INCL_AKIN","ARM_NUM", "AGE_CLASS", "SEX", "BMI", "SOFA")

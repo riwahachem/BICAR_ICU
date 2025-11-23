@@ -1,10 +1,7 @@
 library(pROC)
+library(caret)
 
-data = read.csv2("data.csv",sep=" ")
-data <- data.frame(lapply(data, function(x) {
-  if (is.character(x)) as.numeric(x) else x
-}))
-
+data <- read.csv("data.csv")  
 data$PNEUMONIA_YN = factor(data$PNEUMONIA_YN)
 
 # Sélection de variables
