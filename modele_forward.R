@@ -1,11 +1,15 @@
 library(pROC)
 
 data = read.csv2("data.csv",sep=" ")
+data <- data.frame(lapply(data, function(x) {
+  if (is.character(x)) as.numeric(x) else x
+}))
+
 data$PNEUMONIA_YN = factor(data$PNEUMONIA_YN)
 
 # Sélection de variables
 load("vars_forward.Rdata")
-data_f <- data[, vars_forward]
+data_f <- data[, c(vars_forward,"PNEUMONIA_YN")]
 
 set.seed(123)
 d = sort(sample(nrow(data_f), nrow(data_f) * 0.8))
@@ -21,6 +25,12 @@ conf <- caret::confusionMatrix(pred_class, data_f_test$PNEUMONIA_YN, positive = 
 
 roc <- roc(data_f_test$PNEUMONIA_YN, pred, levels = c("0", "1"), direction = "<")
 
-auc_value <- auc(roc_obj)
+auc_value <- auc(roc)
 
-plot(roc, main = "Courbe ROC")
+plot(roc,
+     legacy.axes = TRUE, 
+     col="blue",
+     lwd         = 3, 
+     main        = paste0("Courbe ROC - Modèle forward ",
+                          AUC = round(auc_value, 3))
+)
