@@ -28,6 +28,7 @@ plot(roc,
      legacy.axes = TRUE, 
      col="blue",
      lwd         = 3, 
-     main        = paste0("Courbe ROC - Modèle forward ",
-                          AUC = round(auc_value, 3))
+     xlab = "1 - Spécificité (Taux de faux positifs)",
+     ylab = "Sensibilité (Taux de vrais positifs)",
+     main        = paste0("Courbe ROC - Modèle forward (AUC = ",round(auc_value, 3),")")
 )
