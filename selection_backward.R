@@ -6,7 +6,7 @@ library(car)
 data = read.csv("data.csv", header = TRUE, sep = " ")
 
 #variables à conserver obligatoirement
-vars_obligatoires = c("INCL_SEPSIS_YN","INCL_AKIN","ARM_NUM", "AGE", "SEX", "BMI", "SOFA")
+vars_obligatoires = c("INCL_SEPSIS_YN","INCL_AKIN","ARM_NUM", "AGE_CLASS", "SEX", "BMI", "SOFA")
 
 #variables candidates à éliminer (toutes sauf cible et obligatoires)
 candidats <- setdiff(names(data), c("PNEUMONIA_YN", vars_obligatoires))
