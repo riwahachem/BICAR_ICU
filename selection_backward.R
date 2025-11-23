@@ -27,13 +27,23 @@ mod_init <- glm(formule_init, data = data, family = binomial)
 
 backward_aic <- stepAIC(mod_init, direction = "backward", trace = TRUE)
 
+n <- nrow(data)
+backward_bic <- stepAIC(start_mod, direction = "backward", k = log(n), trace = TRUE)
+
 #Variables selectionnées parmi les variables candidates
-candidats_selec <- attr(terms(backward_aic), "term.labels")
+candidats_selec_aic <- attr(terms(backward_aic), "term.labels")
+candidats_selec_bic <- attr(terms(backward_bic), "term.labels")
 
 # Modèle final à utiliser pour la régression logistique
-vars_finales <- c(candidats_selec, vars_obligatoires)
-formule_finale <- as.formula(paste("PNEUMONIA_YN ~", paste(vars_finales, collapse = " + ")))
-final_model <- glm(formule_finale, data = data, family = binomial)
+vars_finales_aic <- c(candidats_selec, vars_obligatoires)
+vars_finales_bic <- c(candidats_selec_bic, vars_obligatoires)
+
+formule_finale_aic <- as.formula(paste("PNEUMONIA_YN ~", paste(vars_finales_aic, collapse = " + ")))
+formule_finale_bic <- as.formula(paste("PNEUMONIA_YN ~", paste(vars_finales_bic, collapse = " + ")))
+
+final_model_bic <- glm(formule_finale_bic, data = data, family = binomial)
+final_model_aic <- glm(formule_finale_aic, data = data, family = binomial)
 
 # Variables retenues
-print(vars_finales)
+print(vars_finales_aic)
+print(vars_finales_bic)
