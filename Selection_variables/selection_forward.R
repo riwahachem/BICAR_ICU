@@ -45,5 +45,5 @@ print(vars_forward_aic)
 vars_forward_bic <- attr(terms(forward_bic), "term.labels")
 print(vars_forward_bic)
 
-save(vars_forward_aic, file = "vars_forward_aic.RData")
-save(vars_forward_bic, file = "vars_forward_bic.RData")
+save(vars_forward_aic, file = "Selection_variables/vars_forward_aic.RData")
+save(vars_forward_bic, file = "Selection_variables/vars_forward_bic.RData")

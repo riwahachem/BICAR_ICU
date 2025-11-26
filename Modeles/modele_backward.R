@@ -5,7 +5,7 @@ data <- read.csv("data.csv")
 data$PNEUMONIA_YN = factor(data$PNEUMONIA_YN)
 
 # Sélection de variables
-load("vars_backward_aic.Rdata")
+load("Selection_variables/vars_backward_aic.Rdata")
 data_b <- data[, c(vars_backward_aic,"PNEUMONIA_YN")]
 
 set.seed(123)

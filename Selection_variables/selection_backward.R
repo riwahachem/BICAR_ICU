@@ -19,5 +19,5 @@ candidats_selec_bic <- attr(terms(backward_bic), "term.labels")
 vars_backward_aic <- c(candidats_selec_aic, vars_obligatoires)
 vars_backward_bic <- c(candidats_selec_bic, vars_obligatoires)
 
-save(vars_backward_aic, file = "vars_backward_aic.RData")
-save(vars_backward_bic, file = "vars_backward_bic.RData")
+save(vars_backward_aic, file = "Selection_variables/vars_backward_aic.RData")
+save(vars_backward_bic, file = "Selection_variables/vars_backward_bic.RData")
