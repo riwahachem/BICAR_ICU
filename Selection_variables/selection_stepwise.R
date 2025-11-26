@@ -1,3 +1,5 @@
+library(MASS) 
+
 data = read.csv("data.csv", header = TRUE, sep = ",")
 
 # Modèle avec les variables obligatoires
@@ -15,7 +17,7 @@ full_model <- glm(
 )
 
 # Stepwise 
-stepwise_model <- step(
+stepwise_model <- stepAIC(
   null_model,
   scope = list(
     lower = formula(null_model),
