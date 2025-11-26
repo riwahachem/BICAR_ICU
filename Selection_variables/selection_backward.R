@@ -3,7 +3,7 @@ library(dplyr)
 
 data <- read.csv("data.csv")  
 
-vars_obligatoires <- c("ARM_NUM", "INCL_SEPSIS_YN","INCL_AKIN","AGE_CLASS","SEX","BMI","SOFA")
+vars_obligatoires <- c("ARM_NUM", "INCL_SEPSIS_YN","INCL_AKIN","AGE_CLASS")
 
 mod_full <- glm(PNEUMONIA_YN ~ .,
                 data = data, family = binomial)
