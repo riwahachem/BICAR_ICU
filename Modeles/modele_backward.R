@@ -16,11 +16,8 @@ data_b_test = data_b[-d, ]
 modele = glm(PNEUMONIA_YN ~., data = data_b_app, family = binomial)
 
 pred = predict(modele, newdata = data_b_test, type = "response")
-pred_class <- factor(ifelse(pred > 0.3, "1", "0"))
 
-conf <- caret::confusionMatrix(pred_class, data_b_test$PNEUMONIA_YN, positive = "1")
-
-roc <- roc(data_b_test$PNEUMONIA_YN, pred, levels = c("0", "1"), direction = "<")
+roc <- roc(data_b_test$PNEUMONIA_YN, pred)
 
 auc_value <- auc(roc)
 
