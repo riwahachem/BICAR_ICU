@@ -4,7 +4,7 @@ data <- read.csv("data.csv")
 
 # Modèle avec les variables obligatoires
 null_model <- glm(
-  PNEUMONIA_YN ~ ARM_NUM + INCL_SEPSIS_YN + INCL_AKIN + AGE_CLASS + SEX + BMI + SOFA,
+  PNEUMONIA_YN ~ ARM_NUM + INCL_SEPSIS_YN + INCL_AKIN + AGE_CLASS,
   data = data,
   family = binomial
 )
