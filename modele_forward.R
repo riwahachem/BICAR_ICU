@@ -5,8 +5,8 @@ data <- read.csv("data.csv")
 data$PNEUMONIA_YN = factor(data$PNEUMONIA_YN)
 
 # Sélection de variables
-load("vars_forward.Rdata")
-data_f <- data[, c(vars_forward,"PNEUMONIA_YN")]
+load("vars_forward_aic.Rdata")
+data_f <- data[, c(vars_forward_aic,"PNEUMONIA_YN")]
 
 set.seed(123)
 d = sort(sample(nrow(data_f), nrow(data_f) * 0.8))
