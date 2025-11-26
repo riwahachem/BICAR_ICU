@@ -1,3 +1,5 @@
+library(MASS) 
+
 data <- read.csv("data.csv")  
 
 # Modèle avec les variables obligatoires
@@ -15,18 +17,33 @@ full_model <- glm(
 )
 
 # Sélection Forward
-forward_model <- step(
+forward_aic <- stepAIC(
   null_model,
   scope = list(
     lower = formula(null_model),
-    upper = formula(full_model)
+    upper  = formula(full_model)
   ),
-  direction = "forward"
+  direction = "forward",
+  trace = TRUE
 )
 
-summary(forward_model)
+n <- nrow(data)
+forward_bic <- stepAIC(
+  null_model,
+  scope = list(
+    lower = formula(null_model),
+    upper  = formula(full_model)
+  ),
+  direction = "forward",
+  k = log(n),
+  trace = TRUE
+)
 
-vars_forward <- attr(terms(forward_model), "term.labels")
-print(vars_forward)
+vars_forward_aic <- attr(terms(forward_aic), "term.labels")
+print(vars_forward_aic)
 
-save(vars_forward, file = "vars_forward.RData")
+vars_forward_bic <- attr(terms(forward_bic), "term.labels")
+print(vars_forward_bic)
+
+save(vars_forward_aic, file = "vars_forward_aic.RData")
+save(vars_forward_bic, file = "vars_forward_bic.RData")
