@@ -1,22 +1,32 @@
 library(MASS) 
 
+################################################################################
+
+#Pré-requis : Exécution des fichiers Traitement/nettoyage.R pour générer data.csv 
+
+# Ce script contient  : 
+# 1) Le chargement de la table data
+# 2) L'ajustement du modèle logistique "vide" avec seulement les variables de stratifications
+# 3) L'ajustement du modèle logistique complet
+# 4) La selection forward selon les critère AIC et BIC
+# 5) L'extraction et la sauvegarde des variables retenues par la selection
+
+################################################################################
+
 data <- read.csv("data.csv")  
 
-# Modèle avec les variables obligatoires
 null_model <- glm(
   PNEUMONIA_YN ~ ARM_NUM + INCL_SEPSIS_YN + INCL_AKIN + AGE_CLASS,
   data = data,
   family = binomial
 )
 
-# Modèle complet
 full_model <- glm(
   PNEUMONIA_YN ~ ., 
   data = data, 
   family = binomial
 )
 
-# Sélection Forward
 forward_aic <- stepAIC(
   null_model,
   scope = list(
