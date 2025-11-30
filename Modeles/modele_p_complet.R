@@ -4,32 +4,9 @@ library(caret)
 data <- read.csv("data.csv")  
 data$PNEUMONIA_YN = factor(data$PNEUMONIA_YN)
 
-vars <- c(
-  "Acidaemia_reason_admin",
-  "INCL_LAB_serum_creatinine",
-  "SEX",
-  "SUBJID",
-  "SOFA",
-  "ATCD_Severe_liver_insufficiency",
-  "INCL_LAB_PaCO2",
-  "INCL_LAB_serum_bicar",
-  "ATCD_Cirrhosis",
-  "ATCD_Smoking",
-  "ATCD_Immunocompromised",
-  "ADMIN_REASON",
-  "INCL_LAB_PaO2toFiO2_ratio",
-  "BMI",
-  "ATCD_Alcohol_abuse",
-  "AGE",
-  "ATCD_Chronic_hypertension",
-  "ATCD_Cheart_failure",
-  "INCL_LAB_blood_urea_nitrogen",
-  "INCL_LAB_arterial_pH",
-  "ATCD_Ckidney_disease",
-  "ATCD_Crespiratory_insufficiency",
-  "INCL_IMV"
-)
-data_b <- data[, !(names(data) %in% vars)]
+# Sélection de variables
+load("Selection_variables/vars_backward_pvalue.Rdata")
+data_b <- data[, c(vars_backward_pvalue,"PNEUMONIA_YN")]
 
 set.seed(123)
 d = sort(sample(nrow(data_b), nrow(data_b) * 0.8))

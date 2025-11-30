@@ -1,38 +1,51 @@
 library(MASS) 
 
+################################################################################
+
+#Pré-requis : Exécution des fichiers Traitement/nettoyage.R pour générer data.csv 
+
+# Ce script contient  : 
+# 1) Le chargement de la table data
+# 2) L'extraction des variables de startification
+# 3) La selection backward selon les p-value
+# 4) L'extraction et la sauvegarde des variables retenues par la selection
+
+################################################################################
+
 data <- read.csv("data.csv")  
 
-vars <- c(
-  "Acidaemia_reason_admin",
-  "INCL_LAB_serum_creatinine",
-  "SEX",
-  "SUBJID",
-  "SOFA",
-  "ATCD_Severe_liver_insufficiency",
-  "INCL_LAB_PaCO2",
-  "INCL_LAB_serum_bicar",
-  "ATCD_Cirrhosis",
-  "ATCD_Smoking",
-  "ATCD_Immunocompromised",
-  "ADMIN_REASON",
-  "INCL_LAB_PaO2toFiO2_ratio",
-  "BMI",
-  "ATCD_Alcohol_abuse",
-  "AGE",
-  "ATCD_Chronic_hypertension",
-  "ATCD_Cheart_failure",
-  "INCL_LAB_blood_urea_nitrogen",
-  "INCL_LAB_arterial_pH",
-  "ATCD_Ckidney_disease",
-  "ATCD_Crespiratory_insufficiency",
-  "INCL_IMV"
-)
-data <- data[, !(names(data) %in% vars)]
-# Modèle complet
-modele <- glm(PNEUMONIA_YN ~ ., data = data, family = binomial)
-summary(modele)
+vars_obligatoires <- c("ARM_NUM", "INCL_SEPSIS_YN","INCL_AKIN","AGE_CLASS")
 
-s <- summary(modele)$coefficients
-s_no_intercept <- s[-1, , drop = FALSE]
-var_max_p <- rownames(s_no_intercept)[which.max(s_no_intercept[, "Pr(>|z|)"])]
-var_max_p
+alpha <- 0.05
+
+vars_cand <- setdiff(names(data), c("PNEUMONIA_YN", vars_obligatoires))
+
+vars_retirees <- character(0)
+
+repeat {
+  vars_modele <- c(vars_obligatoires, vars_cand)
+  
+  formule <- as.formula(paste("PNEUMONIA_YN ~", paste(vars_modele, collapse = " + ")))
+  modele  <- glm(formule, data = data, family = binomial)
+  
+  s <- summary(modele)$coefficients
+  s_no_intercept <- s[-1, , drop = FALSE]
+  
+  idx_cand <- rownames(s_no_intercept) %in% vars_cand
+  p_cand   <- s_no_intercept[idx_cand, "Pr(>|z|)"]
+  
+  if (length(p_cand) == 0) break
+  
+  var_max <- names(which.max(p_cand))
+  p_max   <- max(p_cand)
+  
+  if (p_max < alpha) break
+  
+  cat("Suppression :", var_max, " (p =", round(p_max, 4), ")\n")
+  
+  vars_cand    <- setdiff(vars_cand, var_max)
+  vars_retirees <- c(vars_retirees, var_max)
+  vars_backward_pvalue <- setdiff(names(data), c("PNEUMONIA_YN", vars_retirees))
+}
+
+save(vars_backward_pvalue, file = "Selection_variables/vars_backward_pvalue.RData")
