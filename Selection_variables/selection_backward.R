@@ -3,18 +3,18 @@ library(dplyr)
 
 ################################################################################
 
-#Pré-requis : Exécution des fichiers Traitement/nettoyage.R pour générer data.csv 
+#Pré-requis : Exécution du fichier Traitement/nettoyage.R pour générer data.csv 
 
 # Ce script contient  : 
 # 1) Le chargement de la table data
-# 2) L'extraction des variables de startification
+# 2) L'extraction des variables de stratification à conserver 
 # 3) L'ajustement du modèle logistique complet
-# 4) La selection backward selon les critère AIC et BIC
-# 5) L'extraction et la sauvegarde des variables retenues par la selection
+# 4) La sélection backward selon les critère AIC et BIC
+# 5) L'extraction et la sauvegarde des variables retenues par la sélection
 
 ################################################################################
 
-data <- read.csv("data.csv")  
+data <- read.csv("Data/data.csv")  
 
 vars_obligatoires <- c("ARM_NUM", "INCL_SEPSIS_YN","INCL_AKIN","AGE_CLASS")
 

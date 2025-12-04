@@ -5,7 +5,7 @@ library(caret)
 
 # Pré-requis : 
 # Exécution du fichier Traitement/nettoyage.R pour générer data.csv 
-# Exécution du fichier Selection_variables/selection_backward.R pour générer vars_backward_aic.Rdata 
+# Exécution du fichier Selection_variables/selection_p_value.R pour générer vars_backward_pvalue.Rdata 
 
 # Ce script contient  : 
 # 1) Le chargement de la table data
@@ -21,9 +21,9 @@ library(caret)
 data <- read.csv("Data/data.csv")  
 data$PNEUMONIA_YN = factor(data$PNEUMONIA_YN)
 
-load("Selection_variables/vars_backward_aic.Rdata")
-data_b <- data[, c(vars_backward_aic,"PNEUMONIA_YN")]
-data_b = subset(data_b,select=-ATCD_Ckidney_disease)
+# Sélection de variables
+load("Selection_variables/vars_backward_pvalue.Rdata")
+data_b <- data[, c(vars_backward_pvalue,"PNEUMONIA_YN")]
 
 set.seed(123)
 d = sort(sample(nrow(data_b), nrow(data_b) * 0.8))
@@ -31,7 +31,6 @@ data_b_app = data_b[d, ]
 data_b_test = data_b[-d, ]
 
 modele = glm(PNEUMONIA_YN ~., data = data_b_app, family = binomial)
-summary(modele)
 
 pred = predict(modele, newdata = data_b_test, type = "response")
 plot(density(pred), main = "Densité des probabilités prédites", xlab = "Probabilité prédite", ylab = "Densité", lwd = 2)
@@ -42,11 +41,11 @@ auc_value <- auc(roc)
 
 plot(roc,
      legacy.axes = TRUE, 
-     col="red",
+     col="blue",
      lwd         = 3, 
      xlab = "Taux de faux positifs",
      ylab = "Taux de vrais positifs",
-     main = paste0("Courbe ROC du modèle après sélection backward")
+     main        = paste0("Courbe ROC du modèle après sélection backward selon les p-values ")
 )
 legend("bottomright", legend = paste("AUC =", round(auc_value, 3))) 
 

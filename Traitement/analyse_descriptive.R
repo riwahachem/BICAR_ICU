@@ -7,22 +7,22 @@ library(dplyr)
 
 # Ce script contient  : 
 # 1) Le chargement de la table data
-# 2) La description de la variable cible PNEUMONIA_YN
-# 3) La visualisation du lien entre les variables qualitative et la variable cible (barblot)
-# 4) La conversion des variables si besoin
+# 2) La conversion des variables si besoin
+# 3) La description de la variable cible PNEUMONIA_YN
+# 4) La visualisation du lien entre les variables qualitatives et la variable cible (barblot)
 # 5) La visualisation du lien entre les variables quantitatives et la variable cible (boxblot)
 
 ################################################################################
 
 
-data = read.csv2("data.csv",sep=",")
+data = read.csv2("Data/data.csv",sep=",")
 
 Y = data$PNEUMONIA_YN
 Y = as.factor(Y)
 table(Y)
 prop.table(table(Y))
 
-#Visualisation de la variable SEX vs la variable cible
+#Visualisation de la variable SEX par rapport à la variable cible
 
 ggplot(data, aes(x = factor(SEX), fill = factor(PNEUMONIA_YN))) +
   geom_bar(position = "fill") +
@@ -34,7 +34,7 @@ ggplot(data, aes(x = factor(SEX), fill = factor(PNEUMONIA_YN))) +
     fill = "Pneumonie"
   )
 
-#Visualisation de la variable ADMIN_REASON vs la variable cible
+#Visualisation de la variable ADMIN_REASON par rapport à la variable cible
 
 ggplot(data, aes(x = factor(ADMIN_REASON), fill = factor(PNEUMONIA_YN))) +
   geom_bar(position = "fill") +
@@ -46,7 +46,7 @@ ggplot(data, aes(x = factor(ADMIN_REASON), fill = factor(PNEUMONIA_YN))) +
     fill = "Pneumonie"
   )
 
-#Visualisation de la variable ATCD_Smoking vs la variable cible
+#Visualisation de la variable ATCD_Smoking par rapport à la variable cible
 
 ggplot(data, aes(x = factor(ATCD_Smoking), fill = factor(PNEUMONIA_YN))) +
   geom_bar(position = "fill") +
@@ -60,7 +60,7 @@ ggplot(data, aes(x = factor(ATCD_Smoking), fill = factor(PNEUMONIA_YN))) +
 
 data$INCL_IMV <- as.factor(data$INCL_IMV)
 
-#Visualisation de la variable INCL_IMV vs la variable cible
+#Visualisation de la variable INCL_IMV par rapport à la variable cible
 
 ggplot(data, aes(x = factor(INCL_IMV), fill = factor(PNEUMONIA_YN))) +
   geom_bar(position = "fill") +
@@ -72,7 +72,7 @@ ggplot(data, aes(x = factor(INCL_IMV), fill = factor(PNEUMONIA_YN))) +
     fill = "Pneumonie"
   )
 
-#Visualisation de la variable ARM_NUM vs la variable cible
+#Visualisation de la variable ARM_NUM par rapport à la variable cible
 
 ggplot(data, aes(x = factor(ARM_NUM), fill = factor(PNEUMONIA_YN))) +
   geom_bar(position = "fill") +
@@ -84,7 +84,7 @@ ggplot(data, aes(x = factor(ARM_NUM), fill = factor(PNEUMONIA_YN))) +
     fill = "Pneumonie"
   ) 
 
-#Visualisation de la variable SOFA vs la variable cible
+#Visualisation de la variable SOFA par rapport à la variable cible
 
 ggplot(data, aes(x = factor(PNEUMONIA_YN), y = SOFA, fill = factor(PNEUMONIA_YN))) +
   geom_boxplot() +
@@ -96,7 +96,7 @@ ggplot(data, aes(x = factor(PNEUMONIA_YN), y = SOFA, fill = factor(PNEUMONIA_YN)
   ) +
   theme(legend.position = "none")
 
-#Visualisation de la variable AGE vs la variable cible
+#Visualisation de la variable AGE par rapport à la variable cible
 
 ggplot(data, aes(x = factor(PNEUMONIA_YN), y = AGE, fill = factor(PNEUMONIA_YN))) +
   geom_boxplot() +
@@ -110,7 +110,7 @@ ggplot(data, aes(x = factor(PNEUMONIA_YN), y = AGE, fill = factor(PNEUMONIA_YN))
 
 data$BMI <- as.numeric(data$BMI)
 
-#Visualisation de la variable BMI vs la variable cible
+#Visualisation de la variable BMI par rapport à la variable cible
 
 ggplot(data, aes(x = factor(PNEUMONIA_YN), y = BMI, fill = factor(PNEUMONIA_YN)
                  ))+

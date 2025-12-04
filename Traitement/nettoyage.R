@@ -3,7 +3,7 @@ library(lubridate)
 
 ################################################################################
 
-#Pré-requis : télécharger toutes les bases de données du CRF 
+#Pré-requis : créer un dossier nommé "Data" et télécharger dans ce dossier toutes les bases de données du CRF 
 
 # Thème : prédiction des infections pulmonaires
 
@@ -16,31 +16,31 @@ library(lubridate)
 
 ################################################################################
 
-# Renommage de la variable ADMIN_SURGICAL en ADMIN_REASON :
-# (0 = admission médicale, 1 = admission chirurgicale)
+# Transformation de la variable ADMIN_SURGICAL en ADMIN_REASON :
+# 0 = admission médicale, 1 = admission chirurgicale
 
-admission = read.csv2("ADMISSION.csv", sep =',')
+admission = read.csv2("Data/ADMISSION.csv", sep =',')
 admission = admission[,c(2,6,7)]
 admission = admission %>% rename(ADMIN_REASON=ADMIN_SURGICAL)
 
-baseline_clin = read.csv2("BASELINE_CLIN.csv", sep =',')
+baseline_clin = read.csv2("Data/BASELINE_CLIN.csv", sep =',')
 baseline_clin = baseline_clin[,c(2, 5:18)]
 
-biology = read.csv2("BIOLOGY.csv", sep =',')
+biology = read.csv2("Data/BIOLOGY.csv", sep =',')
 biology = biology[, c(2, 5:11)]
 
-inclusion = read.csv2("INCLUSION.csv", sep =',')
+inclusion = read.csv2("Data/INCLUSION.csv", sep =',')
 inclusion = inclusion[, c(2,5:7)]
 
-nosocomial = read.csv2("NOSOCOMIAL.csv", sep =',')
+nosocomial = read.csv2("Data/NOSOCOMIAL.csv", sep =',')
 nosocomial = nosocomial[, c(2,5)]
 
-randomization = read.csv2("RANDOMIZATION.csv", sep =',')
+randomization = read.csv2("Data/RANDOMIZATION.csv", sep =',')
 randomization = randomization[, c(2, 5:7, 10)]
 
-# Calcul du score SOFA à l'admission (somme des composants)
+# Calcul du score SOFA à l'admission (somme des composantes)
 
-sofa = read.csv2("SOFA.csv", sep =',')
+sofa = read.csv2("Data/SOFA.csv", sep =',')
 sofa = sofa[, c(2, 5:10)]
 SOFA = rowSums(sofa[,2:7])
 sofa = data.frame(SUBJID = sofa[,"SUBJID"], SOFA)
@@ -65,4 +65,4 @@ data <- data %>%
 
 # Création de la table finale
 
-write.csv(data, "data.csv", row.names = FALSE)
+write.csv(data, "Data/data.csv", row.names = FALSE)

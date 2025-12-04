@@ -2,25 +2,29 @@ library(MASS)
 
 ################################################################################
 
-#Pré-requis : Exécution des fichiers Traitement/nettoyage.R pour générer data.csv 
+#Pré-requis : Exécution du fichier Traitement/nettoyage.R pour générer data.csv 
 
 # Ce script contient  : 
 # 1) Le chargement de la table data
-# 2) L'extraction des variables de startification
-# 3) La selection backward selon les p-value
-# 4) L'extraction et la sauvegarde des variables retenues par la selection
+# 2) L'extraction des variables de stratification à conserver
+# 3) La sélection backward selon les p-values
+# 4) L'extraction et la sauvegarde des variables retenues par la sélection
 
 ################################################################################
 
-data <- read.csv("data.csv")  
+data <- read.csv("Data/data.csv")  
 
 vars_obligatoires <- c("ARM_NUM", "INCL_SEPSIS_YN","INCL_AKIN","AGE_CLASS")
 
+# Définition du seuil de p-value
 alpha <- 0.05
 
 vars_cand <- setdiff(names(data), c("PNEUMONIA_YN", vars_obligatoires))
 
 vars_retirees <- character(0)
+
+# Boucle qui retire la variable ayant la plus grande p-value 
+# jusqu'à ce que toutes les variables soient significatives. 
 
 repeat {
   vars_modele <- c(vars_obligatoires, vars_cand)
@@ -40,8 +44,6 @@ repeat {
   p_max   <- max(p_cand)
   
   if (p_max < alpha) break
-  
-  cat("Suppression :", var_max, " (p =", round(p_max, 4), ")\n")
   
   vars_cand    <- setdiff(vars_cand, var_max)
   vars_retirees <- c(vars_retirees, var_max)
