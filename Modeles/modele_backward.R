@@ -44,9 +44,8 @@ plot(roc,
      legacy.axes = TRUE, 
      col="red",
      lwd         = 3, 
-     xlab = "Taux de faux positifs",
-     ylab = "Taux de vrais positifs",
-     main = paste0("Courbe ROC du modèle après sélection backward")
+     xlab = "False positive rate",
+     ylab = "True positive rate"
 )
 legend("bottomright", legend = paste("AUC =", round(auc_value, 3))) 
 

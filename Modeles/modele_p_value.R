@@ -43,10 +43,8 @@ plot(roc,
      legacy.axes = TRUE, 
      col="blue",
      lwd         = 3, 
-     xlab = "Taux de faux positifs",
-     ylab = "Taux de vrais positifs",
-     main        = paste0("Courbe ROC du modèle après sélection backward selon les p-values ")
-)
+     xlab = "False positive rate",
+     ylab = "True positive rate")
 legend("bottomright", legend = paste("AUC =", round(auc_value, 3))) 
 
 best = coords(roc, "best", best.method="youden", ret = c("threshold","sensitivity","specificity"))
