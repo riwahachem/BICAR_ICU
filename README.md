@@ -3,7 +3,6 @@
 ---
 L'étude se porte sur l’efficacité du traitement au bicarbonate de sodium sur des 
 patients en soins intensifs avec une acidose métabolique sévère.  
-
 Nous nous sommes intéresser en particulier à la survenue d’une infection nosocomiale, 
 durant les 28 jours de suivis. 
 ---
